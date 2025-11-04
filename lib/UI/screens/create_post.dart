@@ -30,6 +30,8 @@ class _CreatePostScreen extends State<CreatePostScreen> {
 
         child: Column(
           children: [
+
+
             //Title
             TextField(
               controller: titleController,
@@ -53,6 +55,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
             ),
 
             const SizedBox(height: 10),
+            
             TextField(
               controller: userIdController,
               decoration: InputDecoration(
@@ -69,6 +72,11 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                 ),
               ),
             ),
+            TextField(
+
+
+
+            ),
 
             SizedBox(height: 30),
             BlocListener<CreatePostBloc, CreatePostState>(
@@ -78,6 +86,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                   userIdController.clear();
                 }
               },
+
               child: BlocBuilder<CreatePostBloc, CreatePostState>(
                 builder: (context, state) {
                   return GestureDetector(

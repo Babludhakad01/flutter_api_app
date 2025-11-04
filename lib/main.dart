@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:youtub_flutter_project/UI/screens/auth_screens/login_page.dart';
-import 'package:youtub_flutter_project/UI/screens/get_posts.dart';
+import 'package:youtub_flutter_project/UI/screens/image_picker.dart';
 import 'package:youtub_flutter_project/core/navigation/navigation_service.dart';
 import 'package:youtub_flutter_project/logic/Blocs/Auth/auth_bloc.dart';
 import 'package:youtub_flutter_project/logic/Blocs/createPost/create_post_bloc.dart';
+import 'package:youtub_flutter_project/logic/Blocs/fileUpload/file_upload_bloc.dart';
 import 'package:youtub_flutter_project/logic/Blocs/posts/posts_bloc.dart';
 import 'package:youtub_flutter_project/routes/app_router.dart';
 
@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => PostBloc()),
         BlocProvider(create: (_) => AuthBloc()),
         BlocProvider(create: (_) => CreatePostBloc()),
+        BlocProvider(create: (_) => FileUploadBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         ),
-         // home: PostScreen(),
+          home: ImagePickerScreen(),
       ),
     );
   }

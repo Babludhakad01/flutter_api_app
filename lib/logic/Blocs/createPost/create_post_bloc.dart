@@ -1,12 +1,12 @@
 import 'package:bloc/bloc.dart';
 import 'package:youtub_flutter_project/data/models/post_create_model.dart';
-import 'package:youtub_flutter_project/data/repositories/post_repository.dart';
+import 'package:youtub_flutter_project/data/repositories/api_repository.dart';
 import 'package:youtub_flutter_project/logic/Blocs/createPost/create_post_event.dart';
 import 'package:youtub_flutter_project/logic/Blocs/createPost/create_post_state.dart';
 import 'package:youtub_flutter_project/utils/enum.dart';
 
 class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
-  PostRepository postRepository = PostRepository();
+  ApiMethods apiMethods = ApiMethods();
 
   CreatePostBloc() : super(const CreatePostState()) {
     on<PostCreated>(_onCreatePost);
@@ -20,7 +20,7 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
 
     try {
       emit(state.copyWith(postStatus: PostStatus.loading));
-      final newPost = await postRepository.createPost(
+      final newPost = await apiMethods.createPost(
         event.title,
         event.userId,
       );

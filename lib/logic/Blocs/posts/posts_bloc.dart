@@ -1,14 +1,13 @@
 import 'package:bloc/bloc.dart';
 import 'package:youtub_flutter_project/data/models/post_get_model.dart';
-import 'package:youtub_flutter_project/data/repositories/post_repository.dart';
+import 'package:youtub_flutter_project/data/repositories/api_repository.dart';
 import 'package:youtub_flutter_project/logic/Blocs/posts/posts_event.dart';
 import 'package:youtub_flutter_project/logic/Blocs/posts/posts_state.dart';
 import 'package:youtub_flutter_project/utils/enum.dart';
 
 class PostBloc extends Bloc<PostEvent, PostStates> {
   List<PostModel> tempPostList = [];
-  PostRepository postRepository = PostRepository();
-
+ApiMethods apiMethods = ApiMethods();
   PostBloc() : super(const PostStates()) {
     on<PostFetched>(_onFetchPost);
     on<SearchItem>(_onSearchItem);
@@ -16,7 +15,7 @@ class PostBloc extends Bloc<PostEvent, PostStates> {
 
   // Fetch Post
   void _onFetchPost(PostFetched event, Emitter<PostStates> emit) async {
-    await postRepository
+    await apiMethods
         .fetchPost()
         .then((value) {
           emit(
@@ -27,7 +26,7 @@ class PostBloc extends Bloc<PostEvent, PostStates> {
             ),
           );
         })
-        .onError((error, StackTrace) {
+        .onError((error, stackTrace) {
           emit(
             state.copyWith(
               postStatus: PostStatus.failure,

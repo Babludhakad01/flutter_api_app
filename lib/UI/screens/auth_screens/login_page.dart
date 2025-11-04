@@ -18,6 +18,7 @@ class _LoginPage extends State<LoginPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController pwdController = TextEditingController();
   bool isVisible = false;
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +28,16 @@ class _LoginPage extends State<LoginPage> {
           ScaffoldMessenger.of(
             context,
           ).showSnackBar(SnackBar(content: Text("Login Successfully")));
+          isLoading = false;
           NavigationService.pushReplacementNamed(AppRoutes.posts);
-
+        } else if (state.status == AuthStatus.loading) {
+          isLoading = true;
         } else if (state.status == AuthStatus.failure) {
           // print(state.error);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(state.error ?? "Login failed")),
           );
+          print(state.error);
         }
       },
       builder: (context, state) {
@@ -175,15 +179,17 @@ class _LoginPage extends State<LoginPage> {
                           ),
                         ],
                       ),
-                      child: const Center(
-                        child: Text(
-                          "Login",
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
+                      child: Center(
+                        child: isLoading
+                            ? CircularProgressIndicator()
+                            : Text(
+                                "Login",
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
                       ),
                     ),
                   ),
